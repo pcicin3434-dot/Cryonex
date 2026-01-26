@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunucu Adın | Minecraft Sunucusu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Genel Temizlik */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        
+        body {
+            background-color: #0f0f0f; /* Koyu arka plan */
+            color: white;
+            line-height: 1.6;
+        }
+
+        /* Navigasyon */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 10%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .logo { font-size: 1.5rem; font-weight: bold; color: #ff9f43; }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover { color: #ff9f43; }
+
+        /* Hero Bölümü (Giriş) */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1627398242454-45a1465c2479?auto=format&fit=crop&q=80'); /* Minecraft görseli buraya */
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero h1 { font-size: 4rem; margin-bottom: 10px; }
+
+        /* IP Kopyalama Kutusu */
+        .ip-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px 30px;
+            border-radius: 50px;
+            border: 2px dashed #ff9f43;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 20px;
+        }
+
+        .ip-box:hover { background: rgba(255, 255, 255, 0.2); transform: scale(1.05); }
+
+        /* Özellik Kartları */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 50px 10%;
+        }
+
+        .card {
+            background: #1a1a1a;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            border-bottom: 4px solid #ff9f43;
+        }
+
+        .card h3 { margin-bottom: 10px; color: #ff9f43; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">SUNUCU ADIN</div>
+        <div class="nav-links">
+            <a href="#">Ana Sayfa</a>
+            <a href="#">Mağaza</a>
+            <a href="#">Wiki</a>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <h1>SUNUCU ADIN</h1>
+        <p>En iyi Survival deneyimi seni bekliyor!</p>
+        <div class="ip-box" onclick="copyIP()">
+            <span id="server-ip">play.sunucuadın.com</span>
+        </div>
+    </div>
+
+    <div class="features">
+        <div class="card">
+            <h3>Hile Koruması</h3>
+            <p>Gelişmiş anticheat sistemimizle adil bir oyun ortamı sunuyoruz.</p>
+        </div>
+        <div class="card">
+            <h3>Özel Ekonomi</h3>
+            <p>Tamamen oyuncu odaklı, dengeli ve eğlenceli ticaret sistemi.</p>
+        </div>
+        <div class="card">
+            <h3>7/24 Destek</h3>
+            <p>Bir sorun mu var? Ekibimiz her zaman yardıma hazır!</p>
+        </div>
+    </div>
+
+    <script>
+        function copyIP() {
+            const ip = document.getElementById('server-ip').innerText;
+            navigator.clipboard.writeText(ip);
+            alert("IP adresi kopyalandı! Oyuna katılmanı bekliyoruz.");
+        }
+    </script>
+
+</body>
+</html>
