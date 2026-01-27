@@ -1,135 +1,91 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cryonex Network | Aktif Arayüz</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        /* CSS AYARLARI (Öncekiyle Aynı, Sadece Buton Efektleri Eklendi) */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background-color: #0b0c10; color: white; overflow-x: hidden; scroll-behavior: smooth; }
-        #snow-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: linear-gradient(to bottom, #000428, #004e92); }
-        nav { position: fixed; top: 20px; left: 5%; width: 90%; height: 60px; background: white; border-radius: 15px; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; z-index: 1000; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        .nav-links { display: flex; gap: 15px; align-items: center; }
-        .nav-links a { color: #333; text-decoration: none; font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; gap: 5px; transition: 0.3s; cursor: pointer; }
-        .nav-links a:hover { color: #ff4757; }
-        .user-status { color: #333; font-size: 0.8rem; text-align: right; border-left: 1px solid #ddd; padding-left: 15px; }
-        .container { margin-top: 120px; display: flex; justify-content: center; align-items: flex-start; gap: 30px; padding: 0 10%; }
-        .hero-card { flex: 2; background: rgba(0,0,0,0.6); border-radius: 30px; height: 400px; padding: 50px; display: flex; flex-direction: column; justify-content: center; position: relative; border: 1px solid rgba(255,255,255,0.1); background-image: url('https://images.unsplash.com/photo-1587573089734-09cb99c5a0bb?q=80&w=1974&auto=format&fit=crop'); background-size: cover; background-blend-mode: overlay; }
-        .login-panel { flex: 1; background: white; border-radius: 20px; padding: 30px; color: #333; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-        .input-group { position: relative; margin-bottom: 15px; }
-        .input-group i { position: absolute; left: 15px; top: 12px; color: #ff4757; }
-        .input-group input { width: 100%; padding: 10px 10px 10px 45px; background: #f1f2f6; border: none; border-radius: 10px; outline: none; }
-        .btn-login { width: 100%; padding: 12px; background: #ff4757; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        .btn-register { width: 100%; padding: 10px; background: transparent; color: #ff4757; border: 2px solid #ff4757; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); }
-        .modal-content { background: #1f2833; margin: 5% auto; padding: 30px; border-radius: 20px; width: 90%; max-width: 500px; border: 2px solid #66fcf1; position: relative; color: white; }
-        .close { position: absolute; right: 20px; top: 10px; font-size: 28px; cursor: pointer; color: #66fcf1; }
-    </style>
-</head>
-<body>
+<div id="shopModal" class="modal">
+    <div class="modal-content" style="max-width: 900px; background: #f8f9fa; color: #333;">
+        <span class="close" onclick="closeModal('shopModal')" style="color: #333;">&times;</span>
+        
+        <div id="category-view">
+            <h2 style="margin-bottom: 25px; text-align: left; font-weight: 700;">Kategoriler</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px;">
+                
+                <div class="shop-card" onclick="showPackages('vip-list')" style="background: linear-gradient(135deg, #ffd700, #b8860b);">
+                    <i class="fa fa-crown" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                    <h3>VİPLER</h3>
+                </div>
 
-    <canvas id="snow-canvas"></canvas>
+                <div class="shop-card" style="background: linear-gradient(135deg, #2ecc71, #27ae60);">
+                    <i class="fa fa-cubes" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                    <h3>SPAWNERLAR</h3>
+                </div>
 
-    <nav>
-        <div class="nav-links">
-            <a onclick="location.reload()"><i class="fa fa-home"></i> Anasayfa</a>
-            <a onclick="openModal('shopModal')"><i class="fa fa-shopping-cart"></i> Mağaza</a>
-            <a onclick="openModal('supportModal')"><i class="fa fa-life-ring"></i> Destek</a>
-            <a onclick="alert('Sandıklar yakında!')"><i class="fa fa-archive"></i> Sandık</a>
-            <a onclick="alert('Henüz ceza yok kanka!')"><i class="fa fa-ban"></i> Cezalar</a>
-            <a onclick="openModal('applyModal')"><i class="fa fa-book"></i> Wiki</a>
-        </div>
-        <div class="user-status" id="nav-user">
-            <b>Misafir</b><br>Tıkla Giriş Yap!
-        </div>
-    </nav>
+                <div class="shop-card" style="background: linear-gradient(135deg, #3498db, #2980b9);">
+                    <i class="fa fa-key" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                    <h3>ANAHTARLAR</h3>
+                </div>
 
-    <div class="container">
-        <div class="hero-card">
-            <h1>Arkadaş Edin</h1>
-            <p>Cryonex Network sunucusunda kendine yeni arkadaşlıklar bul...</p>
-            <button onclick="alert('IP: play.cryonex.com')">Bağlantıya Git</button>
-        </div>
-
-        <div class="login-panel">
-            <h3>Giriş Yap</h3>
-            <div class="input-group">
-                <i class="fa fa-user"></i>
-                <input type="text" id="login-user" placeholder="Kullanıcı Adı">
+                <div class="shop-card" style="background: linear-gradient(135deg, #e67e22, #d35400);">
+                    <i class="fa fa-box-open" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                    <h3>EŞYA PAKETLERİ</h3>
+                </div>
             </div>
-            <div class="input-group">
-                <i class="fa fa-lock"></i>
-                <input type="password" id="login-pass" placeholder="Şifre">
+        </div>
+
+        <div id="vip-list" style="display: none;">
+            <button onclick="backToCategories()" style="border:none; background:none; color:#ff4757; cursor:pointer; font-weight:bold; margin-bottom:20px;">
+                <i class="fa fa-arrow-left"></i> Kategorilere Dön
+            </button>
+            <h2 style="margin-bottom: 20px;">VIP Paketleri</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div class="package-item"><span>VIP (3 Günlük)</span> <b>25 TL</b> <button class="buy-small">Satın Al</button></div>
+                <div class="package-item"><span>VIP (1 Haftalık)</span> <b>30 TL</b> <button class="buy-small">Satın Al</button></div>
+                <div class="package-item" style="border-color:#ff4757"><span>MVP+ (3 Günlük)</span> <b>50 TL</b> <button class="buy-small" style="background:#ff4757">Satın Al</button></div>
+                <div class="package-item" style="border-color:#ff4757"><span>MVP+ (1 Haftalık)</span> <b>80 TL</b> <button class="buy-small" style="background:#ff4757">Satın Al</button></div>
             </div>
-            <button class="btn-login" onclick="handleLogin()">Giriş Yap</button>
-            <button class="btn-register" onclick="openModal('regModal')">Kayıt Ol</button>
         </div>
     </div>
+</div>
 
-    <div id="regModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('regModal')">&times;</span>
-            <h2>Kayıt Ol</h2>
-            <div class="input-group" style="margin-top:20px;">
-                <input type="text" id="reg-user" placeholder="Kullanıcı Adı" style="width:100%; padding:15px; border-radius:10px;">
-            </div>
-            <div class="input-group">
-                <input type="password" id="reg-pass" placeholder="Şifre" style="width:100%; padding:15px; border-radius:10px;">
-            </div>
-            <button class="btn-login" onclick="handleRegister()">Kayıt İşlemini Tamamla</button>
-        </div>
-    </div>
+<style>
+    /* Yeni Mağaza Tasarımı CSS */
+    .shop-card {
+        padding: 30px;
+        border-radius: 15px;
+        color: white;
+        text-align: center;
+        cursor: pointer;
+        transition: 0.3s;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    .shop-card:hover { transform: translateY(-5px); filter: brightness(1.1); }
+    .shop-card h3 { font-size: 0.9rem; letter-spacing: 1px; }
 
-    <script>
-        // Modal Kontrolleri
-        function openModal(id) { document.getElementById(id).style.display = "block"; }
-        function closeModal(id) { document.getElementById(id).style.display = "none"; }
+    .package-item {
+        background: white;
+        padding: 15px;
+        border-radius: 10px;
+        border: 1px solid #ddd;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .buy-small {
+        padding: 5px 15px;
+        background: #2ecc71;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+</style>
 
-        // GİRİŞ YAPMA FONKSİYONU
-        function handleLogin() {
-            const user = document.getElementById('login-user').value;
-            if(user.length > 2) {
-                document.getElementById('nav-user').innerHTML = `<b>${user}</b><br>Hoş geldin!`;
-                alert('Başarıyla giriş yapıldı!');
-            } else {
-                alert('Lütfen geçerli bir kullanıcı adı girin!');
-            }
-        }
+<script>
+    // Mağaza Fonksiyonları
+    function showPackages(id) {
+        document.getElementById('category-view').style.display = 'none';
+        document.getElementById(id).style.display = 'block';
+    }
 
-        // KAYIT OLMA FONKSİYONU
-        function handleRegister() {
-            const user = document.getElementById('reg-user').value;
-            if(user.length > 2) {
-                alert(`Tebrikler ${user}, kaydın başarıyla oluşturuldu! Şimdi giriş yapabilirsin.`);
-                closeModal('regModal');
-                document.getElementById('login-user').value = user; // Kayıt olan adı giriş kutusuna yaz
-            } else {
-                alert('Lütfen formu doldurun!');
-            }
-        }
-
-        // Kar Efekti (Hızlı)
-        const canvas = document.getElementById('snow-canvas');
-        const ctx = canvas.getContext('2d');
-        let width, height, snowflakes = [];
-        function init() {
-            width = window.innerWidth; height = window.innerHeight;
-            canvas.width = width; canvas.height = height;
-            snowflakes = [];
-            for (let i = 0; i < 100; i++) snowflakes.push({ x: Math.random() * width, y: Math.random() * height, r: Math.random() * 3 + 1, d: Math.random() * 1 });
-        }
-        function draw() {
-            ctx.clearRect(0, 0, width, height); ctx.fillStyle = "white"; ctx.beginPath();
-            for (let i = 0; i < snowflakes.length; i++) {
-                let p = snowflakes[i]; ctx.moveTo(p.x, p.y); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2, true);
-                p.y += p.d + 1; if (p.y > height) snowflakes[i].y = 0;
-            }
-            ctx.fill();
-        }
-        init(); setInterval(draw, 30);
-    </script>
-</body>
-</html>
+    function backToCategories() {
+        document.getElementById('category-view').style.display = 'block';
+        document.getElementById('vip-list').style.display = 'none';
+    }
+</script>
