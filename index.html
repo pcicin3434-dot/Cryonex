@@ -1,91 +1,77 @@
 <div id="shopModal" class="modal">
-    <div class="modal-content" style="max-width: 900px; background: #f8f9fa; color: #333;">
+    <div class="modal-content" style="max-width: 1000px; background: #f8f9fa; color: #333; overflow-y: auto; max-height: 90vh;">
         <span class="close" onclick="closeModal('shopModal')" style="color: #333;">&times;</span>
         
         <div id="category-view">
-            <h2 style="margin-bottom: 25px; text-align: left; font-weight: 700;">Kategoriler</h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px;">
+            <h2 style="margin-bottom: 25px; text-align: left; font-weight: 700; border-bottom: 2px solid #ddd; padding-bottom: 10px;">Mağaza Kategorileri</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
                 
-                <div class="shop-card" onclick="showPackages('vip-list')" style="background: linear-gradient(135deg, #ffd700, #b8860b);">
-                    <i class="fa fa-crown" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                <div class="shop-card" onclick="showSection('vip-list')" style="background: linear-gradient(135deg, #ffd700, #b8860b);">
+                    <img src="https://minecraft.wiki/images/thumb/Gold_Ingot_JE4_BE2.png/120px-Gold_Ingot_JE4_BE2.png" width="50" alt="VIP">
                     <h3>VİPLER</h3>
                 </div>
 
-                <div class="shop-card" style="background: linear-gradient(135deg, #2ecc71, #27ae60);">
-                    <i class="fa fa-cubes" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                <div class="shop-card" onclick="showSection('spawner-list')" style="background: linear-gradient(135deg, #2ecc71, #27ae60);">
+                    <img src="https://minecraft.wiki/images/thumb/Spawner_JE3_BE2.png/120px-Spawner_JE3_BE2.png" width="50" alt="Spawner">
                     <h3>SPAWNERLAR</h3>
                 </div>
 
-                <div class="shop-card" style="background: linear-gradient(135deg, #3498db, #2980b9);">
-                    <i class="fa fa-key" style="font-size: 2rem; margin-bottom: 10px;"></i>
-                    <h3>ANAHTARLAR</h3>
-                </div>
-
-                <div class="shop-card" style="background: linear-gradient(135deg, #e67e22, #d35400);">
-                    <i class="fa fa-box-open" style="font-size: 2rem; margin-bottom: 10px;"></i>
-                    <h3>EŞYA PAKETLERİ</h3>
+                <div class="shop-card" onclick="alert('Bu kategori yakında aktif olacaktır!')" style="background: linear-gradient(135deg, #95a5a6, #7f8c8d);">
+                    <img src="https://minecraft.wiki/images/thumb/Diamond_JE3_BE3.png/120px-Diamond_JE3_BE3.png" width="40" alt="Diğer">
+                    <h3>DİĞER ÜRÜNLER</h3>
                 </div>
             </div>
         </div>
 
-        <div id="vip-list" style="display: none;">
-            <button onclick="backToCategories()" style="border:none; background:none; color:#ff4757; cursor:pointer; font-weight:bold; margin-bottom:20px;">
-                <i class="fa fa-arrow-left"></i> Kategorilere Dön
-            </button>
-            <h2 style="margin-bottom: 20px;">VIP Paketleri</h2>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                <div class="package-item"><span>VIP (3 Günlük)</span> <b>25 TL</b> <button class="buy-small">Satın Al</button></div>
-                <div class="package-item"><span>VIP (1 Haftalık)</span> <b>30 TL</b> <button class="buy-small">Satın Al</button></div>
-                <div class="package-item" style="border-color:#ff4757"><span>MVP+ (3 Günlük)</span> <b>50 TL</b> <button class="buy-small" style="background:#ff4757">Satın Al</button></div>
-                <div class="package-item" style="border-color:#ff4757"><span>MVP+ (1 Haftalık)</span> <b>80 TL</b> <button class="buy-small" style="background:#ff4757">Satın Al</button></div>
+        <div id="vip-list" class="shop-section" style="display: none;">
+            <button class="back-btn" onclick="backToMain()"><i class="fa fa-arrow-left"></i> Geri Dön</button>
+            <h2 style="margin-bottom: 20px; color:#b8860b">VIP Üyelikler</h2>
+            <div class="package-grid">
+                <div class="package-item"><span>VIP (3 Günlük)</span> <b>25 TL</b> <button class="buy-btn">Satın Al</button></div>
+                <div class="package-item"><span>VIP (1 Haftalık)</span> <b>30 TL</b> <button class="buy-btn">Satın Al</button></div>
+                <div class="package-item" style="border-left: 5px solid #ff4757;"><span>MVP+ (3 Günlük)</span> <b>50 TL</b> <button class="buy-btn" style="background:#ff4757">Satın Al</button></div>
+                <div class="package-item" style="border-left: 5px solid #ff4757;"><span>MVP+ (1 Haftalık)</span> <b>80 TL</b> <button class="buy-btn" style="background:#ff4757">Satın Al</button></div>
+            </div>
+        </div>
+
+        <div id="spawner-list" class="shop-section" style="display: none;">
+            <button class="back-btn" onclick="backToMain()"><i class="fa fa-arrow-left"></i> Geri Dön</button>
+            <h2 style="margin-bottom: 20px; color:#27ae60">Mob Spawnerlar</h2>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">
+                <div class="spawner-card"><img src="https://minecraft.wiki/images/thumb/Spawn_Egg_JE2_BE2.png/120px-Spawn_Egg_JE2_BE2.png" width="40"><br>Koyun Spawner<br><b>100 TL</b><button class="buy-small">Al</button></div>
+                <div class="spawner-card"><img src="https://minecraft.wiki/images/thumb/Spawn_Egg_JE2_BE2.png/120px-Spawn_Egg_JE2_BE2.png" width="40" style="filter: hue-rotate(90deg);"><br>Zombi Spawner<br><b>100 TL</b><button class="buy-small">Al</button></div>
+                <div class="spawner-card"><img src="https://minecraft.wiki/images/thumb/Spawn_Egg_JE2_BE2.png/120px-Spawn_Egg_JE2_BE2.png" width="40" style="filter: grayscale(1);"><br>İskelet Spawner<br><b>100 TL</b><button class="buy-small">Al</button></div>
+                <div class="spawner-card"><img src="https://minecraft.wiki/images/thumb/Spawn_Egg_JE2_BE2.png/120px-Spawn_Egg_JE2_BE2.png" width="40" style="filter: sepia(1);"><br>İnek Spawner<br><b>100 TL</b><button class="buy-small">Al</button></div>
+                <div class="spawner-card"><img src="https://minecraft.wiki/images/thumb/Spawn_Egg_JE2_BE2.png/120px-Spawn_Egg_JE2_BE2.png" width="40" style="filter: hue-rotate(300deg);"><br>Domuz Spawner<br><b>100 TL</b><button class="buy-small">Al</button></div>
+                <div class="spawner-card"><img src="https://minecraft.wiki/images/thumb/Spawn_Egg_JE2_BE2.png/120px-Spawn_Egg_JE2_BE2.png" width="40" style="filter: hue-rotate(150deg);"><br>Örümcek Spawner<br><b>100 TL</b><button class="buy-small">Al</button></div>
+                <div class="spawner-card"><img src="https://minecraft.wiki/images/thumb/Spawn_Egg_JE2_BE2.png/120px-Spawn_Egg_JE2_BE2.png" width="40" style="filter: invert(1);"><br>Enderman Spawner<br><b>100 TL</b><button class="buy-small">Al</button></div>
+                <div class="spawner-card"><img src="https://minecraft.wiki/images/thumb/Spawn_Egg_JE2_BE2.png/120px-Spawn_Egg_JE2_BE2.png" width="40" style="filter: brightness(0.5);"><br>Creeper Spawner<br><b>100 TL</b><button class="buy-small">Al</button></div>
+                <div class="spawner-card"><img src="https://minecraft.wiki/images/thumb/Spawn_Egg_JE2_BE2.png/120px-Spawn_Egg_JE2_BE2.png" width="40" style="filter: contrast(2);"><br>Blaze Spawner<br><b>100 TL</b><button class="buy-small">Al</button></div>
             </div>
         </div>
     </div>
 </div>
 
 <style>
-    /* Yeni Mağaza Tasarımı CSS */
-    .shop-card {
-        padding: 30px;
-        border-radius: 15px;
-        color: white;
-        text-align: center;
-        cursor: pointer;
-        transition: 0.3s;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    }
-    .shop-card:hover { transform: translateY(-5px); filter: brightness(1.1); }
-    .shop-card h3 { font-size: 0.9rem; letter-spacing: 1px; }
-
-    .package-item {
-        background: white;
-        padding: 15px;
-        border-radius: 10px;
-        border: 1px solid #ddd;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .buy-small {
-        padding: 5px 15px;
-        background: #2ecc71;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-weight: bold;
-    }
+    /* Stil Güncellemeleri */
+    .shop-card { padding: 40px 20px; border-radius: 15px; color: white; text-align: center; cursor: pointer; transition: 0.3s; box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+    .shop-card:hover { transform: translateY(-8px); filter: brightness(1.2); }
+    .back-btn { background: #eee; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; margin-bottom: 20px; font-weight: bold; }
+    .package-grid { display: flex; flex-direction: column; gap: 10px; }
+    .package-item { background: #fff; padding: 20px; border: 1px solid #ddd; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; }
+    .buy-btn { background: #2ecc71; color: white; border: none; padding: 10px 25px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+    .spawner-card { background: white; padding: 15px; border-radius: 10px; border: 1px solid #eee; text-align: center; font-size: 0.8rem; font-weight: bold; }
+    .buy-small { width: 100%; margin-top: 5px; background: #27ae60; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 0.7rem; padding: 5px; }
 </style>
 
 <script>
-    // Mağaza Fonksiyonları
-    function showPackages(id) {
+    function showSection(id) {
         document.getElementById('category-view').style.display = 'none';
+        document.querySelectorAll('.shop-section').forEach(s => s.style.display = 'none');
         document.getElementById(id).style.display = 'block';
     }
-
-    function backToCategories() {
+    function backToMain() {
         document.getElementById('category-view').style.display = 'block';
-        document.getElementById('vip-list').style.display = 'none';
+        document.querySelectorAll('.shop-section').forEach(s => s.style.display = 'none');
     }
 </script>
