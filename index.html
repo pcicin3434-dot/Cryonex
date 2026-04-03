@@ -3,189 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cryonex | Bukkit SMP</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    
+    <title>Selam Timuçin</title>
     <style>
-        * {
+        /* CSS BÖLÜMÜ */
+        body, html {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background: radial-gradient(circle, #2a0000 0%, #050000 100%);
-            color: white;
-            font-family: 'Roboto', sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
+            height: 100%;
+            width: 100%;
             overflow: hidden;
-            position: relative;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #000;
         }
 
-        body::before {
-            content: "";
-            position: absolute;
-            width: 100%; height: 100%;
-            background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
-            opacity: 0.15;
+        /* Arka Plan Görseli */
+        .minecraft-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            object-fit: cover;
+            /* Minecraft atmosferi için hafif bulanıklık */
+            filter: brightness(0.6);
+        }
+
+        /* Kar Efekti Katmanı */
+        #snow-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
             z-index: 1;
         }
 
+        /* Merkezdeki Cam Pencere */
         .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             position: relative;
-            z-index: 10;
+            z-index: 2;
+        }
+
+        .glass-window {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            width: 450px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
             text-align: center;
-            width: 100%;
-            max-width: 500px;
-            padding: 20px;
-            animation: fadeIn 1s ease-in-out;
+            color: white;
+            animation: slideUp 1.5s ease-out;
         }
 
-        .logo-box {
-            width: 260px;
-            height: 260px;
-            margin: 0 auto 25px;
-            border: 3px solid #ff0000;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.4);
-            background-color: #1a0000;
+        /* Pencere Üstündeki Renkli Noktalar (Mac stili) */
+        .dots {
+            display: flex;
+            gap: 7px;
+            position: absolute;
+            top: 15px;
+            left: 20px;
         }
 
-        .logo-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .red { background: #ff5f56; }
+        .yellow { background: #ffbd2e; }
+        .green { background: #27c93f; }
 
         h1 {
-            font-family: 'Oswald', sans-serif;
-            font-size: 3.5rem;
-            letter-spacing: 5px;
-            text-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
-            margin-bottom: 5px;
+            font-size: 3rem;
+            margin: 10px 0;
+            letter-spacing: 2px;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
-        .subtitle {
+        p {
             font-size: 1.1rem;
-            color: #ccc;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-bottom: 30px;
-            display: block;
+            opacity: 0.8;
+            font-weight: 300;
         }
 
-        .status-panel {
-            background: rgba(0, 0, 0, 0.6);
-            border: 2px solid #ff0000;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: inset 0 0 15px rgba(255, 0, 0, 0.3), 0 0 20px rgba(255, 0, 0, 0.2);
-            margin-bottom: 30px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .status-panel:hover {
-            box-shadow: 0 0 35px rgba(255, 0, 0, 0.5);
-            transform: translateY(-3px);
-        }
-
-        .ip-label {
-            font-size: 1.2rem;
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .online-info {
-            color: #ffcc00;
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-
-        .copy-hint {
-            font-size: 0.8rem;
-            color: #777;
-            margin-top: 10px;
-            text-transform: uppercase;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-        }
-
-        .btn {
-            flex: 1;
-            padding: 15px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            transition: 0.3s;
-            text-align: center;
-        }
-
-        .btn-discord {
-            background: #7289da;
-            color: white;
-        }
-
-        .btn-market {
-            background: #ffcc00;
-            color: black;
-            box-shadow: 0 0 15px rgba(255, 204, 0, 0.3);
-        }
-
-        .btn:hover {
-            filter: brightness(1.2);
-            transform: scale(1.05);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
             to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
+    <img class="minecraft-bg" src="https://wallpaperaccess.com/full/1324831.jpg" alt="Minecraft">
+
+    <canvas id="snow-canvas"></canvas>
+
     <div class="container">
-        <div class="logo-box">
-            <img src="https://via.placeholder.com/300x300/8b0000/ffffff?text=BLOODLUST+LOGO" alt="Bloodlust Logo">
-        </div>
-
-        <h1>BLOODLUST</h1>
-        <span class="subtitle">Vanilla SMP</span>
-
-        <div class="status-panel" onclick="copyIP()">
-            <span class="ip-label">Server IP: party-bargain.gl.joinmc.link</span>
-            <div class="online-info">Online: 69/100 players</div>
-            <p class="copy-hint">(Kopyalamak İçin Tıkla)</p>
-        </div>
-
-        <div class="btn-group">
-            <a href="#" class="btn btn-discord">JOIN DISCORD</a>
-            <a href="https://credosboxpvp-dev.github.io/konacore1/" target="_blank" class="btn btn-market">SUNUCU MARKETİ</a>
+        <div class="glass-window">
+            <div class="dots">
+                <div class="dot red"></div>
+                <div class="dot yellow"></div>
+                <div class="dot green"></div>
+            </div>
+            <h1>Selam Timuçin</h1>
+            <p>Sistemler hazır. Kış geldi.</p>
         </div>
     </div>
 
     <script>
-        function copyIP() {
-            const ip = "party-bargain.gl.joinmc.link";
-            navigator.clipboard.writeText(ip).then(() => {
-                alert("IP Adresi başarıyla kopyalandı!");
+        // JAVASCRIPT BÖLÜMÜ (Kar Efekti)
+        const canvas = document.getElementById('snow-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let particles = [];
+        let w, h;
+
+        function setCanvasSize() {
+            w = window.innerWidth;
+            h = window.innerHeight;
+            canvas.width = w;
+            canvas.height = h;
+        }
+
+        window.addEventListener('resize', setCanvasSize);
+        setCanvasSize();
+
+        function createParticles() {
+            for (let i = 0; i < 150; i++) {
+                particles.push({
+                    x: Math.random() * w,
+                    y: Math.random() * h,
+                    size: Math.random() * 3 + 1,
+                    speed: Math.random() * 1 + 0.5,
+                    opacity: Math.random() * 0.8
+                });
+            }
+        }
+
+        function drawParticles() {
+            ctx.clearRect(0, 0, w, h);
+            ctx.fillStyle = 'white';
+            
+            particles.forEach(p => {
+                ctx.globalAlpha = p.opacity;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            updateParticles();
+        }
+
+        function updateParticles() {
+            particles.forEach(p => {
+                p.y += p.speed;
+                // Hafif rüzgar efekti
+                p.x += Math.sin(p.y / 50) * 0.5;
+
+                if (p.y > h) {
+                    p.y = -10;
+                    p.x = Math.random() * w;
+                }
             });
         }
-    </script>
 
+        function animate() {
+            drawParticles();
+            requestAnimationFrame(animate);
+        }
+
+        createParticles();
+        animate();
+    </script>
 </body>
 </html>
-
