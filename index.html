@@ -2,13 +2,89 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Eğitim Portalı - Matematik Projesi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eğitim Portalı - Matematik</title>
     <style>
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
-        iframe { width: 100%; height: 100%; border: none; }
+        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: sans-serif; background: #000; }
+        
+        /* Arka Plan Minecraft Görseli */
+        .bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -2; object-fit: cover; filter: brightness(0.5);
+        }
+
+        /* Kar Efekti */
+        #snow { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 1; }
+
+        /* Cam Pencere */
+        .container {
+            display: flex; justify-content: center; align-items: center;
+            height: 100vh; position: relative; z-index: 2;
+        }
+
+        .window {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            width: 400px; padding: 40px; text-align: center; color: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        p { opacity: 0.8; margin-bottom: 30px; }
+
+        /* Oyun Butonu */
+        .btn {
+            display: inline-block; padding: 15px 30px;
+            background: #2e7d32; color: white;
+            text-decoration: none; border-radius: 10px;
+            font-weight: bold; transition: 0.3s;
+            box-shadow: 0 4px #1b5e20;
+        }
+        .btn:hover { background: #388e3c; transform: scale(1.05); }
     </style>
 </head>
 <body>
-    <iframe src="https://eaglercraft.com/mc/1.8.8/"></iframe>
-</body>
-</html>
+
+    <img class="bg" src="https://wallpaperaccess.com/full/1324831.jpg">
+    <canvas id="snow"></canvas>
+
+    <div class="container">
+        <div class="window">
+            <h1>Selam Timuçin</h1>
+            <p>Sistemler hazır, kar yağıyor...</p>
+            <a href="mc.html" class="btn">MİNECRAFT'I BAŞLAT</a>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('snow');
+        const ctx = canvas.getContext('2d');
+        let w, h, particles = [];
+
+        function init() {
+            w = window.innerWidth; h = window.innerHeight;
+            canvas.width = w; canvas.height = h;
+            particles = [];
+            for (let i = 0; i < 150; i++) {
+                particles.push({ x: Math.random() * w, y: Math.random() * h, r: Math.random() * 3 + 1, d: Math.random() * 1 });
+            }
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, w, h);
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+            ctx.beginPath();
+            for (let p of particles) {
+                ctx.moveTo(p.x, p.y);
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2, true);
+            }
+            ctx.fill();
+            update();
+        }
+
+        function update() {
+            for (let p of particles) {
+                p.y += Math.cos(p.d) + 1 + p.r / 2;
+                if (p.y > h) { p.y = -10; p.x = Math.random()
