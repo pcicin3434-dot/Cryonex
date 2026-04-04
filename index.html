@@ -2,55 +2,145 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Cryonex Launcher</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İyi ki Doğdun Aşkım!</title>
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #000; font-family: sans-serif; }
-        #snow { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
-        .container { display: flex; justify-content: center; align-items: center; height: 100vh; position: relative; z-index: 2; }
-        .window { background: rgba(255, 255, 255, 0.07); backdrop-filter: blur(15px); padding: 45px; border-radius: 25px; text-align: center; color: white; border: 1px solid rgba(255,255,255,0.1); width: 380px; box-shadow: 0 20px 50px rgba(0,0,0,0.8); }
-        h1 { font-size: 1.8rem; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 2px; }
-        p { opacity: 0.6; margin-bottom: 30px; font-size: 0.9rem; letter-spacing: 1px; }
-        .btn-group { display: flex; flex-direction: column; gap: 12px; }
-        .btn { display: block; padding: 14px; border-radius: 10px; font-weight: bold; text-decoration: none; transition: 0.3s; text-transform: uppercase; }
-        .btn-mc { background: #2e7d32; color: white; box-shadow: 0 4px #1b5e20; }
-        .btn-mc:hover { background: #388e3c; transform: scale(1.03); }
-        .btn-dc { background: #5865F2; color: white; font-size: 0.85rem; }
-        .btn-dc:hover { background: #4752c4; opacity: 0.9; }
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Kar Efekti */
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        /* Ana Buton */
+        #magicButton {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            background: transparent;
+            color: #ff0000;
+            border: 2px solid #ff0000;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 0 10px #ff0000;
+            text-shadow: 0 0 5px #ff0000;
+            transition: 0.3s;
+            z-index: 10;
+        }
+
+        #magicButton:hover {
+            background: #ff0000;
+            color: white;
+            box-shadow: 0 0 30px #ff0000;
+        }
+
+        /* Neon Pencere */
+        #neonWindow {
+            display: none;
+            position: relative;
+            background: rgba(0, 0, 0, 0.9);
+            border: 3px solid #ff0000;
+            box-shadow: 0 0 20px #ff0000, inset 0 0 15px #ff0000;
+            padding: 30px;
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+            border-radius: 15px;
+            z-index: 20;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        h1 { color: #ff0000; text-shadow: 0 0 10px #ff0000; margin-bottom: 20px; }
+        p { line-height: 1.6; font-size: 1.1rem; }
     </style>
 </head>
 <body>
+
     <canvas id="snow"></canvas>
-    <div class="container">
-        <div class="window">
-            <h1>Cryonex Launcher</h1>
-            <p>by asia...</p>
-            <div class="btn-group">
-                <a href="mc.html" class="btn btn-mc">MİNECRAFT'I BAŞLAT</a>
-                <a href="https://discord.gg/Ce2xfeHE" target="_blank" class="btn btn-dc">Discord'a Katıl</a>
-            </div>
-        </div>
+
+    <button id="magicButton" onclick="showSurprise()">Sürprizi Gör ❤️</button>
+
+    <div id="neonWindow">
+        <h1>İyi ki doğdun askimm 🎂</h1>
+        <p>Hayatıma girdiğinden beri her şey daha güzel hissettiriyor.<br>
+        Seni sevmek çok kolay çünkü kalbime en iyi gelen şey sensin.<br>
+        Yeni yaşında hep yanında olmak, seni daha çok sevmek istiyorum.<br><br>
+        <strong>İyi ki varsın aşkım iyi ki benimlesin ❤️</strong></p>
     </div>
+
     <script>
+        // Sürprizi göster
+        function showSurprise() {
+            document.getElementById('magicButton').style.display = 'none';
+            document.getElementById('neonWindow').style.display = 'block';
+        }
+
+        // Kar Efekti Scripti
         const canvas = document.getElementById('snow');
         const ctx = canvas.getContext('2d');
-        let particles = [];
+        let width, height, flakes = [];
+
         function init() {
-            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-            particles = [];
-            for (let i = 0; i < 120; i++) particles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, r: Math.random() * 3 + 1, s: Math.random() * 1 + 0.5 });
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+            flakes = [];
+            for (let i = 0; i < 150; i++) {
+                flakes.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    r: Math.random() * 3 + 1,
+                    d: Math.random() * 1
+                });
+            }
         }
+
         function draw() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+            ctx.clearRect(0, 0, width, height);
+            ctx.fillStyle = 'white';
             ctx.beginPath();
-            for (let p of particles) { ctx.moveTo(p.x, p.y); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); }
-            ctx.fill(); update();
+            for (let i = 0; i < flakes.length; i++) {
+                let f = flakes[i];
+                ctx.moveTo(f.x, f.y);
+                ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2, true);
+            }
+            ctx.fill();
+            move();
         }
-        function update() {
-            for (let p of particles) { p.y += p.s; if (p.y > canvas.height) { p.y = -10; p.x = Math.random() * canvas.width; } }
+
+        function move() {
+            for (let i = 0; i < flakes.length; i++) {
+                let f = flakes[i];
+                f.y += Math.pow(f.d, 2) + 1;
+                if (f.y > height) {
+                    flakes[i] = { x: Math.random() * width, y: 0, r: f.r, d: f.d };
+                }
+            }
         }
+
         window.addEventListener('resize', init);
-        init(); setInterval(draw, 30);
+        init();
+        setInterval(draw, 30);
     </script>
 </body>
 </html>
